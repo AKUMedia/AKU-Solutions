@@ -240,17 +240,31 @@ header {
   gap: 10px;
 }
 .logo .mark {
-  width: 26px; height: 26px;
-  border-radius: 7px;
-  background: var(--grad);
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  overflow: hidden;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 800;
-  color: #fff;
-  box-shadow: 0 4px 16px -4px rgba(91,108,255,.6);
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px -4px rgba(138,93,246,.7);
 }
+.logo .mark svg { width: 100%; height: 100%; display: block; }
+
+/* центральное меню навигации */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-menu a {
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--text-dim);
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: color .25s var(--ease), background .25s var(--ease);
+}
+.nav-menu a:hover { color: var(--text); background: rgba(255,255,255,.04); }
+
 .nav .btn { padding: 11px 20px; font-size: 14px; }
 
 /* ============================================================
@@ -314,7 +328,7 @@ header {
 
 .catalog {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
   gap: 22px;
 }
 
@@ -615,6 +629,7 @@ footer {
    АДАПТИВ
    ============================================================ */
 @media (max-width: 860px) {
+  .nav-menu { display: none; }
   .catalog { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; }
   .eco { gap: 18px; }
@@ -667,10 +682,24 @@ a:focus-visible {
 <!-- ===================== ШАПКА ===================== -->
 <header>
   <div class="wrap nav">
+    <!-- ВСТАВИТЬ СЮДА ЛОГОТИП ИЗ ИЗОБРАЖЕНИЯ (сейчас встроен загруженный SVG) -->
     <a href="#" class="logo">
-      <span class="mark">A</span> AKU Solutions
+      <span class="mark">
+        <svg viewBox="0 0 640 640" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="640" height="640" fill="#8A5DF6"/>
+          <path d="M267.707 430H211.031L284.646 211.818H354.852L428.467 430H371.791L320.548 266.79H318.844L267.707 430ZM260.143 344.134H378.609V384.19H260.143V344.134Z" fill="white"/>
+        </svg>
+      </span>
+      AKU Solutions
     </a>
-    <a href="#catalog" class="btn btn-ghost">Каталог</a>
+
+    <nav class="nav-menu">
+      <a href="#catalog">Каталог</a>
+      <a href="#how">Процесс</a>
+      <a href="#ecosystem">Экосистема</a>
+    </nav>
+
+    <a href="https://t.me/akumediamgr" target="_blank" rel="noopener" class="btn btn-primary">Связаться</a>
   </div>
 </header>
 
@@ -703,14 +732,14 @@ a:focus-visible {
 
     <div class="catalog">
 
-      <!-- Карточка 1 -->
+      <!-- Продукт 1 -->
       <article class="card">
         <span class="tag">Автобизнес / Импорт</span>
         <div class="icon" style="margin-top:18px">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17H3v-5l2-5h11l3 5h2v5h-2"/><circle cx="7.5" cy="17.5" r="1.6"/><circle cx="17.5" cy="17.5" r="1.6"/></svg>
         </div>
-        <h3>ИИ-Калькулятор стоимости авто под ключ</h3>
-        <p class="desc">Интегрируется в Telegram и Instagram. Автоматически считает растаможку, логистику и утильсбор по актуальным курсам валют через API и заносит горячий лид в amoCRM.</p>
+        <h3>ИИ-Калькулятор стоимости авто под ключ & CRM-Лидген</h3>
+        <p class="desc">Интеграция парсера курсов валют, расчёт таможни, логистики и утильсбора, авто-создание сделки в CRM. Работает в Telegram и Instagram, заносит горячий лид мгновенно.</p>
         <div class="price">
           <div class="col"><div class="lbl">Запуск</div><div class="val">$1 500</div></div>
           <div class="col sub"><div class="lbl">Сервер + API</div><div class="val">$70/мес.</div></div>
@@ -718,14 +747,14 @@ a:focus-visible {
         <a href="#contact" class="btn btn-primary">Заказать решение</a>
       </article>
 
-      <!-- Карточка 2 -->
+      <!-- Продукт 2 -->
       <article class="card">
-        <span class="tag">Сфера услуг / CRM</span>
+        <span class="tag">Стоматологии / Клиники</span>
         <div class="icon" style="margin-top:18px">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/></svg>
         </div>
-        <h3>ИИ-Администратор & Автозапись 24/7</h3>
-        <p class="desc">Подхватывает заявки в WhatsApp и Instagram Direct в любую секунду. Ведёт осмысленный диалог, проверяет свободные слоты в Yclients или amoCRM и сам записывает клиента на приём.</p>
+        <h3>ИИ-Администратор 24/7 & Синхронизация записей</h3>
+        <p class="desc">Настройка ассистента в WhatsApp и Instagram, интеграция с Yclients или amoCRM, автозапись на свободные слоты. Ведёт диалог и не теряет ни одной заявки.</p>
         <div class="price">
           <div class="col"><div class="lbl">Запуск</div><div class="val">$1 200</div></div>
           <div class="col sub"><div class="lbl">Сервер + API</div><div class="val">$50/мес.</div></div>
@@ -733,14 +762,59 @@ a:focus-visible {
         <a href="#contact" class="btn btn-primary">Заказать решение</a>
       </article>
 
-      <!-- Карточка 3 -->
+      <!-- Продукт 3 -->
       <article class="card">
-        <span class="tag">B2B Лидген / Софт</span>
+        <span class="tag">Рестораны / HoReCa</span>
+        <div class="icon" style="margin-top:18px">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7a3 3 0 0 0 6 0V2M6 2v20M16 2c-2 0-3 2-3 5s1 5 3 5m0 0v10"/></svg>
+        </div>
+        <h3>Автономный Бот-Официант & ИИ-Менеджер отзывов</h3>
+        <p class="desc">Интерактивная Web-витрина меню внутри Telegram, корзина, выбор доставки, приём оплат и фильтрация негативных отзывов до того, как они попадут в публичный доступ.</p>
+        <div class="price">
+          <div class="col"><div class="lbl">Запуск</div><div class="val">$950</div></div>
+          <div class="col sub"><div class="lbl">Сервер + API</div><div class="val">$45/мес.</div></div>
+        </div>
+        <a href="#contact" class="btn btn-primary">Заказать решение</a>
+      </article>
+
+      <!-- Продукт 4 -->
+      <article class="card">
+        <span class="tag">Локальный E-commerce</span>
+        <div class="icon" style="margin-top:18px">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/><path d="M2 3h3l2.4 12.4a2 2 0 0 0 2 1.6h8.5a2 2 0 0 0 2-1.6L23 7H6"/></svg>
+        </div>
+        <h3>Умный ИИ-Консультант по ассортименту</h3>
+        <p class="desc">Синхронизация с МойСклад и таблицами, подбор товара по фото или описанию, автоматическое выставление ссылок на оплату прямо в переписке с клиентом.</p>
+        <div class="price">
+          <div class="col"><div class="lbl">Запуск</div><div class="val">$850</div></div>
+          <div class="col sub"><div class="lbl">Сервер + API</div><div class="val">$40/мес.</div></div>
+        </div>
+        <a href="#contact" class="btn btn-primary">Заказать решение</a>
+      </article>
+
+      <!-- Продукт 5 -->
+      <article class="card">
+        <span class="tag">Онлайн-школы / Инфобизнес</span>
+        <div class="icon" style="margin-top:18px">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5"/></svg>
+        </div>
+        <h3>ИИ-Воронка прогрева & ИИ-Куратор курсов</h3>
+        <p class="desc">Геймифицированная воронка со скорингом аудитории и ИИ-робот для мгновенных ответов студентам по материалам лекций. Прогревает и удерживает без участия команды.</p>
+        <div class="price">
+          <div class="col"><div class="lbl">Запуск</div><div class="val">$1 400</div></div>
+          <div class="col sub"><div class="lbl">Сервер + API</div><div class="val">$60/мес.</div></div>
+        </div>
+        <a href="#contact" class="btn btn-primary">Заказать решение</a>
+      </article>
+
+      <!-- Продукт 6 -->
+      <article class="card">
+        <span class="tag">Digital-агентства / Отделы продаж</span>
         <div class="icon" style="margin-top:18px">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
         </div>
-        <h3>Автономный ИИ-Скаут (поиск клиентов)</h3>
-        <p class="desc">Сканирует гео-карты и соцсети, выявляет компании с ошибками в воронках продаж, генерирует точечные коммерческие предложения под их боли и присылает вам на апрув.</p>
+        <h3>Автономный B2B ИИ-Скаут (Система лидгена)</h3>
+        <p class="desc">Скрипт автоматического поиска клиентов по картам и соцсетям, генерация точечных офферов под боли компании и отправка через Mini App. Поток лидов на автопилоте.</p>
         <div class="price">
           <div class="col"><div class="lbl">Запуск</div><div class="val">$1 800</div></div>
           <div class="col sub"><div class="lbl">Сервер + API</div><div class="val">$90/мес.</div></div>
@@ -748,17 +822,17 @@ a:focus-visible {
         <a href="#contact" class="btn btn-primary">Заказать решение</a>
       </article>
 
-      <!-- Карточка 4 -->
+      <!-- Продукт 7 -->
       <article class="card">
-        <span class="tag">Оптовики / Застройщики / Компании</span>
+        <span class="tag">Недвижимость / Оптовики</span>
         <div class="icon" style="margin-top:18px">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
         </div>
-        <h3>ИИ-Конструктор документов из CRM и таблиц</h3>
-        <p class="desc">Скрипт по одной кнопке забирает данные клиента из сделки, автоматически генерирует PDF-договор, счёт на оплату и акт выполненных работ и мгновенно отправляет клиенту на почту или в мессенджер.</p>
+        <h3>ИИ-Конструктор документов из CRM</h3>
+        <p class="desc">Генерация PDF-договоров, счетов и актов по одной кнопке в CRM плюс робот-квалификатор входящих лидов. Закрывает рутину документооборота полностью.</p>
         <div class="price">
-          <div class="col"><div class="lbl">Запуск</div><div class="val">$800</div></div>
-          <div class="col sub"><div class="lbl">Сервер + API</div><div class="val">$40/мес.</div></div>
+          <div class="col"><div class="lbl">Запуск</div><div class="val">$1 100</div></div>
+          <div class="col sub"><div class="lbl">Сервер + API</div><div class="val">$50/мес.</div></div>
         </div>
         <a href="#contact" class="btn btn-primary">Заказать решение</a>
       </article>
