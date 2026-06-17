@@ -458,6 +458,219 @@ header {
 .step p { color: var(--text-dim); font-size: 15px; }
 
 /* ============================================================
+   БЛОК — ВАРИАНТЫ РАБОТЫ (ТАРИФЫ)
+   ============================================================ */
+.pricing {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  align-items: stretch;
+}
+.tier {
+  position: relative;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 38px 36px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform .35s var(--ease), background .35s var(--ease);
+}
+.tier:hover { transform: translateY(-4px); background: var(--bg-elev-2); }
+/* выделенный тариф (SaaS) */
+.tier.featured {
+  border-color: transparent;
+  background:
+    radial-gradient(500px 240px at 100% 0%, rgba(139,92,246,.16), transparent 70%),
+    var(--bg-elev);
+}
+.tier.featured::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--grad);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+.tier .tier-badge {
+  position: absolute;
+  top: 22px; right: 22px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: #fff;
+  background: var(--grad);
+  padding: 5px 12px;
+  border-radius: 100px;
+  box-shadow: 0 6px 18px -6px rgba(91,108,255,.6);
+}
+.tier .kicker {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+}
+.tier h3 {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -.025em;
+  line-height: 1.12;
+  margin: 12px 0 8px;
+  max-width: 90%;
+}
+.tier .who {
+  color: var(--text-dim);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.tier .tier-price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 24px 0 4px;
+}
+.tier .tier-price .amount {
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: -.03em;
+}
+.tier .tier-price .per { color: var(--text-faint); font-size: 16px; font-weight: 500; }
+.tier .tier-price.text .amount { font-size: 22px; }
+
+.tier .feats {
+  list-style: none;
+  margin: 26px 0 0;
+  padding-top: 26px;
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex-grow: 1;
+}
+.tier .feats li {
+  display: flex;
+  gap: 12px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+.tier .feats li b { color: var(--text); font-weight: 600; }
+.tier .feats .ic {
+  flex-shrink: 0;
+  width: 20px; height: 20px;
+  margin-top: 1px;
+  border-radius: 6px;
+  background: rgba(139,92,246,.12);
+  border: 1px solid rgba(139,92,246,.25);
+  display: flex; align-items: center; justify-content: center;
+}
+.tier .feats .ic svg { width: 12px; height: 12px; stroke: var(--accent-3); }
+.tier .btn { width: 100%; margin-top: 28px; }
+
+/* ============================================================
+   БЛОК — КЕЙСЫ И ОТЗЫВЫ
+   ============================================================ */
+.cases {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 22px;
+}
+.case {
+  position: relative;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform .35s var(--ease), background .35s var(--ease);
+}
+.case::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--grad);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .35s var(--ease);
+  pointer-events: none;
+}
+.case:hover { transform: translateY(-4px); background: var(--bg-elev-2); }
+.case:hover::before { opacity: .85; }
+
+.case .niche {
+  align-self: flex-start;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--accent-2);
+  background: rgba(139,92,246,.10);
+  border: 1px solid rgba(139,92,246,.22);
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+.case h3 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.28;
+  margin: 18px 0 12px;
+}
+.case h3 .hl { color: var(--accent-3); }
+.case .task {
+  color: var(--text-dim);
+  font-size: 14.5px;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+/* мини A→B метрика */
+.case .ab {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 22px 0;
+  padding: 16px 18px;
+  border-radius: var(--r-md);
+  background: rgba(255,255,255,.02);
+  border: 1px solid var(--border-soft);
+}
+.case .ab .m { text-align: center; flex: 1; }
+.case .ab .m .v { font-size: 19px; font-weight: 700; letter-spacing: -.02em; }
+.case .ab .m .l { font-size: 11.5px; color: var(--text-faint); text-transform: uppercase; letter-spacing: .04em; margin-top: 3px; }
+.case .ab .arr { color: var(--accent-2); font-size: 18px; }
+.case .ab .m.to .v { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+
+.case .quote {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 6px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border-soft);
+}
+.case .quote .ava {
+  width: 42px; height: 42px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--grad);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; color: #fff;
+}
+.case .quote .meta .nm { font-size: 14.5px; font-weight: 600; }
+.case .quote .meta .rl { font-size: 12.5px; color: var(--text-faint); margin-top: 1px; }
+.case .quote-text { font-style: italic; color: var(--text-dim); font-size: 14px; line-height: 1.55; margin-bottom: 16px; }
+
+/* ============================================================
    БЛОК 3.5 — ЭКОСИСТЕМА AKU (горизонтальные баннеры)
    ============================================================ */
 .eco { display: flex; flex-direction: column; gap: 22px; }
@@ -631,6 +844,8 @@ footer {
 @media (max-width: 860px) {
   .nav-menu { display: none; }
   .catalog { grid-template-columns: 1fr; }
+  .pricing { grid-template-columns: 1fr; }
+  .cases { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; }
   .eco { gap: 18px; }
   .banner {
@@ -695,6 +910,8 @@ a:focus-visible {
 
     <nav class="nav-menu">
       <a href="#catalog">Каталог</a>
+      <a href="#pricing">Тарифы</a>
+      <a href="#cases">Кейсы</a>
       <a href="#how">Процесс</a>
       <a href="#ecosystem">Экосистема</a>
     </nav>
@@ -835,6 +1052,120 @@ a:focus-visible {
           <div class="col sub"><div class="lbl">Сервер + API</div><div class="val">$50/мес.</div></div>
         </div>
         <a href="#contact" class="btn btn-primary">Заказать решение</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== БЛОК — ВАРИАНТЫ РАБОТЫ (ТАРИФЫ) ===================== -->
+<section class="section" id="pricing">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow"><span class="dot"></span> Варианты работы</span>
+      <h2>Два формата сотрудничества</h2>
+      <p>Выкупаете уникальное решение под свои процессы или арендуете готовый отточенный инструмент и стартуете сразу. Выбираете то, что точнее под вашу задачу.</p>
+    </div>
+
+    <div class="pricing">
+
+      <!-- Вариант 1 -->
+      <article class="tier">
+        <span class="kicker">Вариант 1</span>
+        <h3>Выкуп под ключ</h3>
+        <p class="who">Для бизнеса, которому нужна уникальная автоматизация под индивидуальные, специфические процессы.</p>
+        <div class="tier-price text">
+          <span class="amount">Индивидуально</span>
+        </div>
+        <ul class="feats">
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>Полный <b>аудит бизнес-процессов</b> и разработка архитектуры под вашу задачу.</span></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>Написание сценариев и ботов <b>«под ключ»</b> с передачей всех прав и доступов клиенту.</span></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><b>Подписка по желанию:</b> следим за стабильностью серверов, обновлением API сторонних сервисов и оперативно правим баги.</span></li>
+        </ul>
+        <a href="https://t.me/akumediamgr" target="_blank" rel="noopener" class="btn btn-ghost">Обсудить проект <span class="arrow">→</span></a>
+      </article>
+
+      <!-- Вариант 2 -->
+      <article class="tier featured">
+        <span class="tier-badge">Старт сразу</span>
+        <span class="kicker">Вариант 2</span>
+        <h3>Аренда готового софта</h3>
+        <p class="who">Для компаний со стандартными болями: нужен готовый b2b-скаут, ИИ-квалификатор лидов, авто-HR или парсер — и результат прямо сейчас.</p>
+        <div class="tier-price">
+          <span class="amount">$150</span><span class="per">/ месяц</span>
+        </div>
+        <ul class="feats">
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>Доступ к нашему <b>готовому, отточенному инструменту</b> с первого дня.</span></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>Система <b>развёрнута на наших серверах</b> и мощностях — ничего настраивать не нужно.</span></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span>Подписка с <b>минимальным контрактом 1 месяц</b>. Инструмент активен, пока оплачен месяц.</span></li>
+        </ul>
+        <a href="https://t.me/akumediamgr" target="_blank" rel="noopener" class="btn btn-primary">Запустить за $150/мес <span class="arrow">→</span></a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== БЛОК — КЕЙСЫ И ОТЗЫВЫ ===================== -->
+<section class="section" id="cases">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow"><span class="dot"></span> Кейсы и отзывы</span>
+      <h2>Результаты, которые говорят за нас</h2>
+      <p>Подборка проектов из разных ниш — с конкретными метриками «до и после» и словами собственников. Раздел пополняется по мере запуска новых решений.</p>
+    </div>
+
+    <div class="cases">
+
+      <!-- Кейс 1 -->
+      <article class="case">
+        <span class="niche">B2B-продажи</span>
+        <h3>Как ИИ-Скаут сократил время обработки лида <span class="hl">с 20 минут до 15 секунд</span></h3>
+        <p class="task">Отдел продаж вручную искал и квалифицировал компании по картам и соцсетям. Мы развернули автономного скаута, который сам находит клиентов, готовит точечный оффер и передаёт менеджеру только тёплый контакт.</p>
+        <div class="ab">
+          <div class="m"><div class="v">20 мин</div><div class="l">было</div></div>
+          <div class="arr">→</div>
+          <div class="m to"><div class="v">15 сек</div><div class="l">стало</div></div>
+        </div>
+        <p class="quote-text">«Менеджеры перестали тонуть в ручном поиске. Лиды приходят уже прогретыми — закрываем больше при той же команде».</p>
+        <div class="quote">
+          <div class="ava">ИК</div>
+          <div class="meta"><div class="nm">Игорь К.</div><div class="rl">Руководитель отдела продаж</div></div>
+        </div>
+      </article>
+
+      <!-- Кейс 2 -->
+      <article class="case">
+        <span class="niche">Онлайн-школы</span>
+        <h3>Как ИИ-Куратор поднял доходимость до конца курса <span class="hl">с 34% до 68%</span></h3>
+        <p class="task">Студенты бросали обучение из-за долгих ответов кураторов. Мы внедрили ИИ-куратора, который мгновенно отвечает по материалам лекций и ведёт прогрев в геймифицированной воронке.</p>
+        <div class="ab">
+          <div class="m"><div class="v">34%</div><div class="l">было</div></div>
+          <div class="arr">→</div>
+          <div class="m to"><div class="v">68%</div><div class="l">стало</div></div>
+        </div>
+        <p class="quote-text">«Ответ студенту приходит за секунды в любое время суток. Доходимость выросла вдвое, а нагрузка на кураторов упала».</p>
+        <div class="quote">
+          <div class="ava">МД</div>
+          <div class="meta"><div class="nm">Мария Д.</div><div class="rl">Основатель онлайн-школы</div></div>
+        </div>
+      </article>
+
+      <!-- Кейс 3 -->
+      <article class="case">
+        <span class="niche">Автобизнес</span>
+        <h3>Как ИИ-Калькулятор увеличил конверсию заявок в сделку <span class="hl">в 2,5 раза</span></h3>
+        <p class="task">Клиенты уходили, не дождавшись ручного расчёта стоимости авто под ключ. Бот теперь сам считает таможню, логистику и утильсбор по актуальным курсам и заносит горячий лид в CRM.</p>
+        <div class="ab">
+          <div class="m"><div class="v">9%</div><div class="l">было</div></div>
+          <div class="arr">→</div>
+          <div class="m to"><div class="v">23%</div><div class="l">стало</div></div>
+        </div>
+        <p class="quote-text">«Расчёт за секунды прямо в переписке — клиент не успевает остыть. Заявки конвертируются в разы лучше».</p>
+        <div class="quote">
+          <div class="ava">АТ</div>
+          <div class="meta"><div class="nm">Алексей Т.</div><div class="rl">Владелец авто-импорт компании</div></div>
+        </div>
       </article>
 
     </div>
