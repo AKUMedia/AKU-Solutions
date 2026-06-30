@@ -31,14 +31,15 @@
   --text-dim:      #A3A6B4;   /* вторичный */
   --text-faint:    #6B6E7C;   /* подписи, мета */
 
-  /* Акценты — сине-фиолетовый градиент Make.com */
-  --accent-1:      #5B6CFF;
-  --accent-2:      #8B5CF6;
-  --accent-3:      #A855F7;
-  --grad: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 55%, var(--accent-3) 100%);
+  /* Акценты — глубокий неоновый фиолетовый (#8A2BE2 / Blue Violet) */
+  --accent-1:      #6A1FB5;   /* глубокий */
+  --accent-2:      #8A2BE2;   /* базовый неон */
+  --accent-3:      #A24DF0;   /* светлый */
+  --accent-rgb:    138, 43, 226;
+  --grad: linear-gradient(135deg, var(--accent-1) 0%, var(--accent-2) 52%, var(--accent-3) 100%);
 
   /* Тени / свечения */
-  --glow:          0 0 0 1px rgba(139,92,246,.18), 0 24px 60px -18px rgba(91,108,255,.35);
+  --glow:          0 0 0 1px rgba(138,43,226,.20), 0 24px 60px -18px rgba(138,43,226,.45);
 
   /* Геометрия */
   --r-lg: 22px;
@@ -66,13 +67,61 @@ body {
   overflow-x: hidden;
   /* радиальный градиент: лёгкое свечение сверху по центру */
   background-image:
-    radial-gradient(900px 500px at 50% -8%, rgba(91,108,255,.16), transparent 60%),
-    radial-gradient(700px 500px at 85% 12%, rgba(168,85,247,.10), transparent 55%);
+    radial-gradient(900px 500px at 50% -8%, rgba(138,43,226,.16), transparent 60%),
+    radial-gradient(700px 500px at 85% 12%, rgba(138,43,226,.10), transparent 55%);
   background-attachment: fixed;
 }
 
 a { color: inherit; text-decoration: none; }
 img, svg { display: block; }
+
+/* ============================================================
+   ФОН — АНИМИРОВАННЫЕ ИИ-СФЕРЫ (плавные переливы)
+   ============================================================ */
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bg-orbs .orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: .42;
+  will-change: transform;
+}
+.bg-orbs .orb.o1 {
+  width: 520px; height: 520px;
+  top: -120px; left: -80px;
+  background: radial-gradient(circle, #8A2BE2, transparent 68%);
+  animation: drift1 22s ease-in-out infinite;
+}
+.bg-orbs .orb.o2 {
+  width: 460px; height: 460px;
+  top: 20%; right: -120px;
+  background: radial-gradient(circle, #6A1FB5, transparent 68%);
+  animation: drift2 27s ease-in-out infinite;
+}
+.bg-orbs .orb.o3 {
+  width: 400px; height: 400px;
+  bottom: -140px; left: 38%;
+  background: radial-gradient(circle, #A24DF0, transparent 70%);
+  animation: drift3 31s ease-in-out infinite;
+}
+@keyframes drift1 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%     { transform: translate(120px, 80px) scale(1.12); }
+}
+@keyframes drift2 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%     { transform: translate(-100px, 120px) scale(1.08); }
+}
+@keyframes drift3 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  50%     { transform: translate(80px, -90px) scale(1.15); }
+}
 
 .wrap {
   width: 100%;
@@ -129,7 +178,7 @@ img, svg { display: block; }
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.28),
     inset 0 -1px 0 rgba(0,0,0,.22),
-    0 10px 30px -10px rgba(91,108,255,.55);
+    0 10px 30px -10px rgba(138,43,226,.55);
 }
 /* стеклянный блик (shimmer), пробегающий раз в 4 секунды */
 .btn-primary::after {
@@ -156,8 +205,8 @@ img, svg { display: block; }
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.32),
     inset 0 -1px 0 rgba(0,0,0,.24),
-    0 20px 48px -12px rgba(139,92,246,.75),
-    0 0 0 1px rgba(139,92,246,.35);
+    0 20px 48px -12px rgba(138,43,226,.75),
+    0 0 0 1px rgba(138,43,226,.35);
 }
 
 /* ---- GHOST: тёмное стекло + градиентная подсветка рамки ---- */
@@ -190,7 +239,7 @@ img, svg { display: block; }
   transform: translateY(-2px);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,.08),
-    0 12px 30px -14px rgba(139,92,246,.5);
+    0 12px 30px -14px rgba(138,43,226,.5);
 }
 .btn-ghost:hover::before { opacity: .9; }
 
@@ -211,7 +260,7 @@ img, svg { display: block; }
 .eyebrow .dot {
   width: 7px; height: 7px; border-radius: 50%;
   background: var(--grad);
-  box-shadow: 0 0 10px rgba(139,92,246,.8);
+  box-shadow: 0 0 10px rgba(138,43,226,.8);
 }
 
 /* ============================================================
@@ -359,8 +408,9 @@ header {
   pointer-events: none;
 }
 .card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
   background: var(--bg-elev-2);
+  box-shadow: 0 24px 60px -22px rgba(138,43,226,.55);
 }
 .card:hover::before { opacity: .9; }
 
@@ -371,8 +421,8 @@ header {
   font-weight: 600;
   letter-spacing: .01em;
   color: var(--accent-2);
-  background: rgba(139,92,246,.10);
-  border: 1px solid rgba(139,92,246,.22);
+  background: rgba(138,43,226,.10);
+  border: 1px solid rgba(138,43,226,.22);
   padding: 6px 12px;
   border-radius: 8px;
 }
@@ -477,12 +527,12 @@ header {
   overflow: hidden;
   transition: transform .35s var(--ease), background .35s var(--ease);
 }
-.tier:hover { transform: translateY(-4px); background: var(--bg-elev-2); }
+.tier:hover { transform: translateY(-5px); background: var(--bg-elev-2); box-shadow: 0 26px 64px -22px rgba(138,43,226,.55); }
 /* выделенный тариф (SaaS) */
 .tier.featured {
   border-color: transparent;
   background:
-    radial-gradient(500px 240px at 100% 0%, rgba(139,92,246,.16), transparent 70%),
+    radial-gradient(500px 240px at 100% 0%, rgba(138,43,226,.16), transparent 70%),
     var(--bg-elev);
 }
 .tier.featured::before {
@@ -507,7 +557,7 @@ header {
   background: var(--grad);
   padding: 5px 12px;
   border-radius: 100px;
-  box-shadow: 0 6px 18px -6px rgba(91,108,255,.6);
+  box-shadow: 0 6px 18px -6px rgba(138,43,226,.6);
 }
 .tier .kicker {
   font-size: 13px;
@@ -566,8 +616,8 @@ header {
   width: 20px; height: 20px;
   margin-top: 1px;
   border-radius: 6px;
-  background: rgba(139,92,246,.12);
-  border: 1px solid rgba(139,92,246,.25);
+  background: rgba(138,43,226,.12);
+  border: 1px solid rgba(138,43,226,.25);
   display: flex; align-items: center; justify-content: center;
 }
 .tier .feats .ic svg { width: 12px; height: 12px; stroke: var(--accent-3); }
@@ -606,7 +656,7 @@ header {
   transition: opacity .35s var(--ease);
   pointer-events: none;
 }
-.case:hover { transform: translateY(-4px); background: var(--bg-elev-2); }
+.case:hover { transform: translateY(-5px); background: var(--bg-elev-2); box-shadow: 0 24px 60px -22px rgba(138,43,226,.5); }
 .case:hover::before { opacity: .85; }
 
 .case .niche {
@@ -614,8 +664,8 @@ header {
   font-size: 12.5px;
   font-weight: 600;
   color: var(--accent-2);
-  background: rgba(139,92,246,.10);
-  border: 1px solid rgba(139,92,246,.22);
+  background: rgba(138,43,226,.10);
+  border: 1px solid rgba(138,43,226,.22);
   padding: 6px 12px;
   border-radius: 8px;
 }
@@ -675,20 +725,31 @@ header {
    ============================================================ */
 .eco { display: flex; flex-direction: column; gap: 22px; }
 
+/* ============================================================
+   БЛОК 3.5 — ЭКОСИСТЕМА AKU (брендированные баннеры)
+   Каждый баннер задаёт свой --brand и --brand-rgb
+   ============================================================ */
+.eco { display: flex; flex-direction: column; gap: 22px; }
+
 .banner {
+  --brand: #8A2BE2;
+  --brand-rgb: 138,43,226;
   position: relative;
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 40px;
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(var(--brand-rgb),.05), transparent 60%),
+    var(--bg-elev);
+  border: 1px solid rgba(var(--brand-rgb),.28);
   border-radius: var(--r-lg);
   padding: 42px 44px;
   overflow: hidden;
-  transition: transform .4s var(--ease), background .4s var(--ease);
+  box-shadow: 0 18px 50px -28px rgba(var(--brand-rgb),.5);
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
 }
-/* мягкое цветное свечение в углу — задаётся через --hue на баннере */
+/* мягкое брендовое свечение в углу */
 .banner::after {
   content: "";
   position: absolute;
@@ -696,15 +757,30 @@ header {
   right: -10%;
   width: 460px;
   height: 460px;
-  background: radial-gradient(circle, var(--hue, rgba(139,92,246,.16)), transparent 65%);
+  background: radial-gradient(circle, rgba(var(--brand-rgb),.22), transparent 65%);
   pointer-events: none;
   opacity: .85;
   transition: opacity .4s var(--ease);
 }
-.banner:hover { transform: translateY(-3px); background: var(--bg-elev-2); }
+.banner:hover {
+  transform: translateY(-5px);
+  border-color: rgba(var(--brand-rgb),.55);
+  box-shadow: 0 30px 70px -26px rgba(var(--brand-rgb),.65);
+}
 .banner:hover::after { opacity: 1; }
 
 .banner .content { position: relative; z-index: 1; max-width: 720px; }
+
+/* мини логотип-иконка проекта (слева сверху) */
+.banner .logo-ico {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(150deg, color-mix(in srgb, var(--brand) 78%, #000), var(--brand));
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 18px;
+  box-shadow: 0 8px 24px -6px rgba(var(--brand-rgb),.8), inset 0 1px 0 rgba(255,255,255,.25);
+}
+.banner .logo-ico svg { width: 24px; height: 24px; stroke: #fff; }
 
 /* верхний малый лейбл баннера */
 .banner .label {
@@ -717,17 +793,16 @@ header {
   text-transform: uppercase;
   padding: 6px 13px;
   border-radius: 8px;
-  border: 1px solid var(--label-bd, var(--border));
-  color: var(--label-fg, var(--text-dim));
-  background: var(--label-bg, rgba(255,255,255,.02));
+  border: 1px solid rgba(var(--brand-rgb),.32);
+  color: var(--brand);
+  background: rgba(var(--brand-rgb),.08);
 }
-/* лейбл с боковыми линиями (для медиа-баннера) */
 .banner .label.lines::before,
 .banner .label.lines::after {
   content: "";
   width: 26px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--label-fg, var(--accent-1)));
+  background: linear-gradient(90deg, transparent, var(--brand));
 }
 .banner .label.lines::after { transform: scaleX(-1); }
 
@@ -736,7 +811,7 @@ header {
   font-weight: 800;
   letter-spacing: -.03em;
   line-height: 1.1;
-  margin: 18px 0 14px;
+  margin: 16px 0 14px;
 }
 .banner .text {
   color: var(--text-dim);
@@ -745,22 +820,48 @@ header {
   max-width: 62ch;
 }
 
-/* ряд тегов-пиллов */
+/* ряд тегов-пиллов (брендированные) */
 .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-.pill {
+.banner .pill {
   display: inline-flex;
   align-items: center;
   gap: 7px;
   font-size: 13px;
   font-weight: 500;
-  color: var(--text-dim);
+  color: color-mix(in srgb, var(--brand) 60%, #fff);
   padding: 6px 14px;
   border-radius: 100px;
-  border: 1px solid rgba(255,255,255,.06);
-  background: rgba(255,255,255,.02);
-  transition: border-color .3s var(--ease), color .3s var(--ease);
+  border: 1px solid rgba(var(--brand-rgb),.28);
+  background: rgba(var(--brand-rgb),.07);
+  transition: border-color .3s var(--ease), background .3s var(--ease);
 }
-.banner:hover .pill { border-color: rgba(255,255,255,.1); }
+.banner:hover .pill { border-color: rgba(var(--brand-rgb),.45); background: rgba(var(--brand-rgb),.12); }
+
+/* брендовая кнопка перехода */
+.btn-brand {
+  position: relative;
+  color: #fff;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 80%, #000), var(--brand));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.25),
+    0 10px 30px -10px rgba(var(--brand-rgb),.7);
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-brand::after {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.30) 48%, transparent 60%);
+  transform: translateX(-120%) skewX(-18deg);
+  animation: shimmer 4s var(--ease) infinite;
+}
+.btn-brand:hover {
+  transform: translateY(-2px) scale(1.025);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.3),
+    0 18px 44px -12px rgba(var(--brand-rgb),.9),
+    0 0 0 1px rgba(var(--brand-rgb),.5);
+}
 
 /* правая часть баннера */
 .banner .aside {
@@ -772,16 +873,16 @@ header {
   gap: 18px;
 }
 
-/* минималистичный лого-знак бренда (для AKU Media) */
+/* крупный лого-знак бренда (для AKU Media справа) */
 .brand-badge { text-align: center; }
 .brand-badge .glyph {
   width: 84px; height: 84px;
   border-radius: 20px;
-  background: linear-gradient(135deg, #2F48FD, #5B6CFF);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--brand) 78%, #000), var(--brand));
   display: flex; align-items: center; justify-content: center;
   font-size: 40px; font-weight: 800; color: #fff;
   margin: 0 auto 12px;
-  box-shadow: 0 12px 40px -10px rgba(47,72,253,.7), inset 0 1px 0 rgba(255,255,255,.3);
+  box-shadow: 0 12px 40px -10px rgba(var(--brand-rgb),.8), inset 0 1px 0 rgba(255,255,255,.3);
 }
 .brand-badge .cap {
   font-size: 11px;
@@ -802,7 +903,7 @@ header {
   border-radius: var(--r-lg);
   padding: 72px 32px;
   background:
-    radial-gradient(600px 280px at 50% 0%, rgba(139,92,246,.18), transparent 70%),
+    radial-gradient(600px 280px at 50% 0%, rgba(138,43,226,.18), transparent 70%),
     var(--bg-elev);
   overflow: hidden;
 }
@@ -883,13 +984,20 @@ a:focus-visible {
 
 <body>
 
+<!-- Анимированные ИИ-сферы фона -->
+<div class="bg-orbs" aria-hidden="true">
+  <span class="orb o1"></span>
+  <span class="orb o2"></span>
+  <span class="orb o3"></span>
+</div>
+
 <!-- SVG-градиент для иконок (заливка stroke) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <linearGradient id="aku-grad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%"  stop-color="#5B6CFF"/>
-      <stop offset="55%" stop-color="#8B5CF6"/>
-      <stop offset="100%" stop-color="#A855F7"/>
+      <stop offset="0%"  stop-color="#6A1FB5"/>
+      <stop offset="55%" stop-color="#8A2BE2"/>
+      <stop offset="100%" stop-color="#A24DF0"/>
     </linearGradient>
   </defs>
 </svg>
@@ -1211,10 +1319,14 @@ a:focus-visible {
 
     <div class="eco">
 
-      <!-- Баннер 1: AKU Automation -->
-      <article class="banner" style="--hue: rgba(219,32,34,.14);">
+      <!-- Баннер 1: AKU Automation — КРАСНЫЙ -->
+      <article class="banner" style="--brand:#E11D2A; --brand-rgb:225,29,42;">
         <div class="content">
-          <span class="label" style="--label-fg:#FF8A8A; --label-bd:rgba(219,32,34,.32); --label-bg:rgba(219,32,34,.08);">Сестринский проект</span>
+          <div class="logo-ico" aria-hidden="true">
+            <!-- стилизованный робот -->
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="2.5"/><path d="M12 8V4M12 4h-1.5M12 4h1.5"/><circle cx="9" cy="13" r="1.2"/><circle cx="15" cy="13" r="1.2"/><path d="M9.5 16.5h5"/></svg>
+          </div>
+          <span class="label">Сестринский проект</span>
           <h3>AKU Automation</h3>
           <p class="text">B2B AI-автоматизация нового поколения — кастомные Telegram-боты, интеграция нейросетей в бизнес-процессы, автономные системы лидогенерации и полная инфраструктурная разработка под ключ. Машины, работающие 24/7 без вашего участия.</p>
           <div class="pills">
@@ -1225,14 +1337,18 @@ a:focus-visible {
           </div>
         </div>
         <div class="aside">
-          <a href="https://akuautomation.github.io/AKUAutomation/" target="_blank" rel="noopener" class="btn btn-primary"><span class="arrow">→</span> Перейти на сайт AKU Automation</a>
+          <a href="https://akuautomation.github.io/AKUAutomation/" target="_blank" rel="noopener" class="btn btn-brand"><span class="arrow">→</span> Перейти на сайт AKU Automation</a>
         </div>
       </article>
 
-      <!-- Баннер 2: AKU Media -->
-      <article class="banner" style="--hue: rgba(47,72,253,.16);">
+      <!-- Баннер 2: AKU Media — СИНИЙ -->
+      <article class="banner" style="--brand:#2563EB; --brand-rgb:37,99,235;">
         <div class="content">
-          <span class="label lines" style="--label-fg:#7E92FF; --label-bd:rgba(47,72,253,.3); --label-bg:rgba(47,72,253,.06);">Медиа-крыло экосистемы</span>
+          <div class="logo-ico" aria-hidden="true">
+            <!-- медиа-значок -->
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m10 9 5 3-5 3V9Z"/></svg>
+          </div>
+          <span class="label lines">Медиа-крыло экосистемы</span>
           <h3>Нужен вирусный контент и трафик?</h3>
           <p class="text">Переходите в наше медиа-крыло AKU Media — AI-видео, нейро-аватары и автономные контент-машины, которые генерируют органический трафик и упаковывают смыслы силами передовых нейросетей.</p>
           <div class="pills">
@@ -1242,7 +1358,7 @@ a:focus-visible {
             <span class="pill">⏳ Reels / Shorts</span>
           </div>
           <div class="pills" style="margin-top:22px">
-            <a href="https://akumedia.github.io/AKU-Media/" target="_blank" rel="noopener" class="btn btn-primary"><span class="arrow">↗</span> Перейти в AKU Media</a>
+            <a href="https://akumedia.github.io/AKU-Media/" target="_blank" rel="noopener" class="btn btn-brand"><span class="arrow">↗</span> Перейти в AKU Media</a>
           </div>
         </div>
         <div class="aside">
@@ -1253,10 +1369,14 @@ a:focus-visible {
         </div>
       </article>
 
-      <!-- Баннер 3: AKU Jobs Hub -->
-      <article class="banner" style="--hue: rgba(212,175,55,.14);">
+      <!-- Баннер 3: AKU Jobs Hub — ОРАНЖЕВЫЙ -->
+      <article class="banner" style="--brand:#F97316; --brand-rgb:249,115,22;">
         <div class="content">
-          <span class="label" style="--label-fg:#E7C66B; --label-bd:rgba(212,175,55,.3); --label-bg:rgba(212,175,55,.06);">ИИ-кадры и вакансии</span>
+          <div class="logo-ico" aria-hidden="true">
+            <!-- портфель + молния -->
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="m13 11-3 3.2h3.2L10 18"/></svg>
+          </div>
+          <span class="label">ИИ-кадры и вакансии</span>
           <h3>AKU Jobs Hub</h3>
           <p class="text">Полноценная платформа подбора ИИ-специалистов, разработчиков и digital-кадров для вашего бизнеса. Быстрый автоматизированный скоринг кандидатов и закрытие вакансий в кратчайшие сроки.</p>
           <div class="pills">
@@ -1267,7 +1387,7 @@ a:focus-visible {
           </div>
         </div>
         <div class="aside">
-          <a href="https://akumedia.github.io/AKU-Jobs-Hub-Website/" target="_blank" rel="noopener" class="btn btn-ghost"><span class="arrow">→</span> Открыть Jobs Hub</a>
+          <a href="https://akumedia.github.io/AKU-Jobs-Hub-Website/" target="_blank" rel="noopener" class="btn btn-brand"><span class="arrow">→</span> Открыть Jobs Hub</a>
         </div>
       </article>
 
