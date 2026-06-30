@@ -362,59 +362,63 @@ header {
 }
 .hero .trust b { color: var(--text); font-weight: 600; }
 
-/* живая ИИ-сфера на чистом CSS */
-.hero .sphere-stage {
+/* интерактивная ИИ-цепочка в стиле Make (чистый CSS/SVG) */
+.hero .flow-stage {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 380px;
 }
-.sphere {
-  position: relative;
-  width: 320px;
+.flow {
+  width: 100%;
+  max-width: 380px;
   aspect-ratio: 1;
-  border-radius: 42% 58% 56% 44% / 48% 42% 58% 52%;
-  background:
-    radial-gradient(circle at 32% 28%, #C77DFF 0%, #8A2BE2 30%, #4A1380 62%, #0B0B0F 100%);
-  box-shadow:
-    0 0 90px -10px rgba(138,43,226,.65),
-    inset -20px -24px 60px rgba(0,0,0,.7),
-    inset 24px 20px 60px rgba(199,125,255,.35);
-  animation: morph 9s ease-in-out infinite;
-  transition: transform .4s var(--ease);
-  will-change: border-radius, transform;
+  overflow: visible;
+  filter: drop-shadow(0 24px 60px rgba(138,43,226,.35));
+  transition: transform .35s var(--ease);
 }
-/* глянцевый блик */
-.sphere::before {
-  content: "";
-  position: absolute;
-  top: 14%; left: 18%;
-  width: 34%; height: 26%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,.55), transparent 70%);
-  filter: blur(6px);
+/* связи (линии) — текущий «поток данных» через бегущий пунктир */
+.flow .link {
+  fill: none;
+  stroke: rgba(138,43,226,.4);
+  stroke-width: 1.6;
+  stroke-dasharray: 5 7;
+  animation: dataflow 1.4s linear infinite;
 }
-/* орбитальное кольцо */
-.sphere::after {
-  content: "";
-  position: absolute;
-  inset: -16%;
-  border-radius: 50%;
-  border: 1px solid rgba(138,43,226,.35);
-  box-shadow: 0 0 40px rgba(138,43,226,.25);
-  animation: spin 16s linear infinite;
+@keyframes dataflow { to { stroke-dashoffset: -48; } }
+
+/* ноды (скруглённые блоки) — мягкая пульсация */
+.flow .node {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: nodePulse 3.4s ease-in-out infinite;
 }
-@keyframes morph {
-  0%,100% { border-radius: 42% 58% 56% 44% / 48% 42% 58% 52%; }
-  33%     { border-radius: 58% 42% 38% 62% / 56% 58% 42% 44%; }
-  66%     { border-radius: 46% 54% 62% 38% / 38% 56% 44% 62%; }
+.flow .node.n1 { animation-delay: 0s; }
+.flow .node.n2 { animation-delay: .5s; }
+.flow .node.n3 { animation-delay: 1s; }
+.flow .node.n4 { animation-delay: 1.5s; }
+.flow .core   { animation: corePulse 3s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes nodePulse {
+  0%,100% { transform: scale(1);    opacity: .92; }
+  50%     { transform: scale(1.07); opacity: 1; }
 }
-@keyframes floaty {
-  0%,100% { transform: translateY(0); }
-  50%     { transform: translateY(-18px); }
+@keyframes corePulse {
+  0%,100% { transform: scale(1);    filter: brightness(1); }
+  50%     { transform: scale(1.05); filter: brightness(1.18); }
 }
-@keyframes spin { to { transform: rotate(360deg); } }
+
+/* светящиеся импульсы, бегущие от нод к ядру */
+.flow .pulse { fill: #C77DFF; filter: drop-shadow(0 0 6px #8A2BE2); }
+.flow .pulse.p1 { animation: runP1 2.6s ease-in-out infinite; }
+.flow .pulse.p2 { animation: runP2 2.6s ease-in-out infinite .6s; }
+.flow .pulse.p3 { animation: runP3 2.6s ease-in-out infinite 1.2s; }
+.flow .pulse.p4 { animation: runP4 2.6s ease-in-out infinite 1.8s; }
+/* d = (центр ядра 188,186) − (центр ноды) */
+@keyframes runP1 { 0%{transform:translate(0,0);opacity:0} 12%{opacity:1} 88%{opacity:1} 100%{transform:translate(112px,100px);opacity:0} }
+@keyframes runP2 { 0%{transform:translate(0,0);opacity:0} 12%{opacity:1} 88%{opacity:1} 100%{transform:translate(-82px,108px);opacity:0} }
+@keyframes runP3 { 0%{transform:translate(0,0);opacity:0} 12%{opacity:1} 88%{opacity:1} 100%{transform:translate(124px,-64px);opacity:0} }
+@keyframes runP4 { 0%{transform:translate(0,0);opacity:0} 12%{opacity:1} 88%{opacity:1} 100%{transform:translate(-90px,-76px);opacity:0} }
 
 /* ============================================================
    БЛОК 2 — КАТАЛОГ
@@ -546,6 +550,55 @@ header {
   font-weight: 600;
 }
 .card .btn { width: 100%; }
+
+/* карточка-заглушка «Скоро новые ИИ-сотрудники» */
+.card.soon {
+  border-style: dashed;
+  border-color: rgba(138,43,226,.4);
+  justify-content: flex-start;
+}
+.card.soon:hover { border-color: rgba(138,43,226,.7); }
+.soon-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #D9B8FF;
+  padding: 7px 14px;
+  border-radius: 100px;
+  border: 1px solid rgba(138,43,226,.45);
+  background: rgba(138,43,226,.12);
+  box-shadow: 0 0 22px rgba(138,43,226,.45), inset 0 0 14px rgba(138,43,226,.25);
+  animation: soonGlow 2.6s ease-in-out infinite;
+}
+.soon-badge .blip {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #C77DFF;
+  box-shadow: 0 0 10px #8A2BE2;
+  animation: nodePulse 1.6s ease-in-out infinite;
+}
+@keyframes soonGlow {
+  0%,100% { box-shadow: 0 0 18px rgba(138,43,226,.35), inset 0 0 12px rgba(138,43,226,.2); }
+  50%     { box-shadow: 0 0 30px rgba(138,43,226,.6),  inset 0 0 16px rgba(138,43,226,.35); }
+}
+.card.soon .icon {
+  border-color: rgba(138,43,226,.3);
+  background: rgba(138,43,226,.08);
+}
+.card.soon .soon-foot {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px dashed rgba(138,43,226,.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-faint);
+  font-size: 13.5px;
+}
 
 /* ============================================================
    БЛОК 3 — КАК ЭТО РАБОТАЕТ
@@ -1042,13 +1095,13 @@ footer {
   .hero .hero-copy { text-align: center; }
   .hero h1, .hero .sub { margin-left: auto; margin-right: auto; }
   .hero .cta-row, .hero .trust { justify-content: center; }
-  .hero .sphere-stage { min-height: 280px; order: -1; }
-  .sphere { width: 230px; }
+  .hero .flow-stage { min-height: 280px; order: -1; }
+  .flow { max-width: 280px; }
 }
 @media (max-width: 520px) {
   .wrap { padding: 0 18px; }
   .hero .trust { gap: 20px; }
-  .sphere { width: 190px; }
+  .flow { max-width: 230px; }
   .card { padding: 26px; }
   .cta-band { padding: 56px 22px; }
   .foot-row { flex-direction: column; text-align: center; }
@@ -1133,8 +1186,42 @@ a:focus-visible {
           <span><b>24/7</b> — работа без выходных</span>
         </div>
       </div>
-      <div class="sphere-stage" aria-hidden="true">
-        <div class="sphere" id="aiSphere"></div>
+      <div class="flow-stage" aria-hidden="true">
+        <svg class="flow" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="flowGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#E000FF"/>
+              <stop offset="55%" stop-color="#8A2BE2"/>
+              <stop offset="100%" stop-color="#5B0FB0"/>
+            </linearGradient>
+            <linearGradient id="coreGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#C77DFF"/>
+              <stop offset="50%" stop-color="#8A2BE2"/>
+              <stop offset="100%" stop-color="#4A1380"/>
+            </linearGradient>
+          </defs>
+
+          <!-- связи (узел → ядро) -->
+          <line class="link" x1="76" y1="86"  x2="188" y2="186"/>
+          <line class="link" x1="270" y1="78" x2="188" y2="186"/>
+          <line class="link" x1="64" y1="250" x2="188" y2="186"/>
+          <line class="link" x1="278" y1="262" x2="188" y2="186"/>
+
+          <!-- ядро ИИ -->
+          <rect class="core" x="160" y="158" width="56" height="56" rx="16" fill="url(#coreGrad)"/>
+
+          <!-- ноды -->
+          <rect class="node n1" x="54"  y="64"  width="44" height="44" rx="13" fill="url(#flowGrad)"/>
+          <rect class="node n2" x="250" y="58"  width="40" height="40" rx="12" fill="url(#flowGrad)"/>
+          <rect class="node n3" x="44"  y="230" width="40" height="40" rx="12" fill="url(#flowGrad)"/>
+          <rect class="node n4" x="256" y="240" width="44" height="44" rx="13" fill="url(#flowGrad)"/>
+
+          <!-- бегущие импульсы -->
+          <circle class="pulse p1" cx="76"  cy="86"  r="3.4"/>
+          <circle class="pulse p2" cx="270" cy="78"  r="3.4"/>
+          <circle class="pulse p3" cx="64"  cy="250" r="3.4"/>
+          <circle class="pulse p4" cx="278" cy="262" r="3.4"/>
+        </svg>
       </div>
     </div>
   </div>
@@ -1254,6 +1341,19 @@ a:focus-visible {
           <div class="col sub"><div class="lbl">Сервер + API</div><div class="val">$50/мес.</div></div>
         </div>
         <a href="#contact" class="btn btn-primary">Заказать решение</a>
+      </article>
+
+      <!-- Карточка-заглушка: новые решения в разработке -->
+      <article class="card soon">
+        <span class="soon-badge"><span class="blip"></span> В разработке · Soon</span>
+        <div class="icon" style="margin-top:18px">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.2"/></svg>
+        </div>
+        <h3>Скоро — новые ИИ-сотрудники</h3>
+        <p class="desc">Постоянно создаём и обучаем новых цифровых сотрудников под ваши задачи. Следующее готовое решение уже на подходе.</p>
+        <div class="soon-foot">
+          <span>🛠️</span><span>Каталог регулярно расширяется и обновляется</span>
+        </div>
       </article>
 
     </div>
@@ -1434,7 +1534,7 @@ a:focus-visible {
       </article>
 
       <!-- Баннер 2: AKU Media — СИНИЙ -->
-      <article class="banner solo" style="--brand:#2563EB; --brand-rgb:37,99,235;">
+      <article class="banner" style="--brand:#2563EB; --brand-rgb:37,99,235;">
         <div class="content">
           <div class="logo-ico" aria-hidden="true"><img src="data:image/png;base64,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" alt="AKU Media" width="52" height="52"></div>
           <span class="label lines">Медиа-крыло экосистемы</span>
@@ -1446,9 +1546,9 @@ a:focus-visible {
             <span class="pill">📈 Органический трафик</span>
             <span class="pill">⏳ Reels / Shorts</span>
           </div>
-          <div class="pills" style="margin-top:22px">
-            <a href="https://akumedia.github.io/AKU-Media/" target="_blank" rel="noopener" class="btn btn-brand"><span class="arrow">↗</span> Перейти в AKU Media</a>
-          </div>
+        </div>
+        <div class="aside">
+          <a href="https://akumedia.github.io/AKU-Media/" target="_blank" rel="noopener" class="btn btn-brand"><span class="arrow">↗</span> Перейти в AKU Media</a>
         </div>
       </article>
 
@@ -1514,12 +1614,12 @@ a:focus-visible {
     });
   });
 
-  // Интерактивная ИИ-сфера: лёгкая реакция на движение мыши
+  // Интерактивная ИИ-цепочка: лёгкий параллакс за курсором
   (function () {
-    const sphere = document.getElementById('aiSphere');
-    if (!sphere) return;
+    const flow = document.querySelector('.flow');
+    if (!flow) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const stage = sphere.parentElement;
+    const stage = flow.parentElement;
     let raf = null;
     stage.addEventListener('mousemove', e => {
       const r = stage.getBoundingClientRect();
@@ -1527,12 +1627,12 @@ a:focus-visible {
       const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
       if (raf) cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        sphere.style.transform = `translate(${dx * 22}px, ${dy * 22}px) scale(1.04)`;
+        flow.style.transform = `translate(${dx * 16}px, ${dy * 16}px)`;
       });
     });
     stage.addEventListener('mouseleave', () => {
       if (raf) cancelAnimationFrame(raf);
-      sphere.style.transform = '';
+      flow.style.transform = '';
     });
   })();
 </script>
