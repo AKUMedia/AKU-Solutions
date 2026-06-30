@@ -317,45 +317,104 @@ header {
 .nav .btn { padding: 11px 20px; font-size: 14px; }
 
 /* ============================================================
-   БЛОК 1 — HERO
+   БЛОК 1 — HERO (двухколоночный, со сферой)
    ============================================================ */
 .hero {
   position: relative;
-  padding: 120px 0 96px;
-  text-align: center;
+  padding: 110px 0 96px;
 }
+.hero .hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  align-items: center;
+  gap: 48px;
+}
+.hero .hero-copy { text-align: left; }
 .hero h1 {
-  font-size: clamp(38px, 6vw, 72px);
-  line-height: 1.04;
+  font-size: clamp(38px, 5.4vw, 66px);
+  line-height: 1.05;
   font-weight: 800;
   letter-spacing: -.035em;
-  margin: 26px auto 0;
-  max-width: 16ch;
+  margin: 22px 0 0;
+  max-width: 15ch;
 }
 .hero .sub {
   font-size: clamp(16px, 2vw, 20px);
   color: var(--text-dim);
-  max-width: 62ch;
-  margin: 26px auto 0;
+  max-width: 54ch;
+  margin: 22px 0 0;
   font-weight: 400;
 }
 .hero .cta-row {
-  margin-top: 40px;
+  margin-top: 36px;
   display: flex;
   gap: 14px;
-  justify-content: center;
   flex-wrap: wrap;
 }
+.hero .cta-row .btn { font-size: 16px; padding: 16px 30px; }
 .hero .trust {
-  margin-top: 40px;
+  margin-top: 38px;
   display: flex;
-  gap: 32px;
-  justify-content: center;
+  gap: 30px;
   flex-wrap: wrap;
   color: var(--text-faint);
   font-size: 14px;
 }
 .hero .trust b { color: var(--text); font-weight: 600; }
+
+/* живая ИИ-сфера на чистом CSS */
+.hero .sphere-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+}
+.sphere {
+  position: relative;
+  width: 320px;
+  aspect-ratio: 1;
+  border-radius: 42% 58% 56% 44% / 48% 42% 58% 52%;
+  background:
+    radial-gradient(circle at 32% 28%, #C77DFF 0%, #8A2BE2 30%, #4A1380 62%, #0B0B0F 100%);
+  box-shadow:
+    0 0 90px -10px rgba(138,43,226,.65),
+    inset -20px -24px 60px rgba(0,0,0,.7),
+    inset 24px 20px 60px rgba(199,125,255,.35);
+  animation: morph 9s ease-in-out infinite;
+  transition: transform .4s var(--ease);
+  will-change: border-radius, transform;
+}
+/* глянцевый блик */
+.sphere::before {
+  content: "";
+  position: absolute;
+  top: 14%; left: 18%;
+  width: 34%; height: 26%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.55), transparent 70%);
+  filter: blur(6px);
+}
+/* орбитальное кольцо */
+.sphere::after {
+  content: "";
+  position: absolute;
+  inset: -16%;
+  border-radius: 50%;
+  border: 1px solid rgba(138,43,226,.35);
+  box-shadow: 0 0 40px rgba(138,43,226,.25);
+  animation: spin 16s linear infinite;
+}
+@keyframes morph {
+  0%,100% { border-radius: 42% 58% 56% 44% / 48% 42% 58% 52%; }
+  33%     { border-radius: 58% 42% 38% 62% / 56% 58% 42% 44%; }
+  66%     { border-radius: 46% 54% 62% 38% / 38% 56% 44% 62%; }
+}
+@keyframes floaty {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-18px); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ============================================================
    БЛОК 2 — КАТАЛОГ
@@ -374,6 +433,15 @@ header {
   font-size: 17px;
   margin-top: 16px;
 }
+/* текстовый маркер-заголовок в стиле g.media */
+.eco-marker {
+  font-size: clamp(20px, 2.4vw, 28px);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  color: var(--text);
+  margin-top: 14px;
+}
+.eco-marker::first-letter { color: var(--accent-2); }
 
 .catalog {
   display: grid;
@@ -383,13 +451,15 @@ header {
 
 .card {
   position: relative;
-  background: var(--bg-elev);
+  background: rgba(18,18,26,.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   padding: 32px;
   display: flex;
   flex-direction: column;
-  transition: transform .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease);
+  transition: transform .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease), box-shadow .35s var(--ease);
   overflow: hidden;
 }
 /* свечение градиентной рамки при ховере */
@@ -408,9 +478,10 @@ header {
   pointer-events: none;
 }
 .card:hover {
-  transform: translateY(-5px);
-  background: var(--bg-elev-2);
-  box-shadow: 0 24px 60px -22px rgba(138,43,226,.55);
+  transform: translateY(-5px) scale(1.02);
+  background: rgba(24,24,34,.62);
+  border-color: rgba(138,43,226,.45);
+  box-shadow: 0 24px 60px -22px rgba(138,43,226,.6);
 }
 .card:hover::before { opacity: .9; }
 
@@ -518,16 +589,18 @@ header {
 }
 .tier {
   position: relative;
-  background: var(--bg-elev);
+  background: rgba(18,18,26,.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   padding: 38px 36px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: transform .35s var(--ease), background .35s var(--ease);
+  transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
 }
-.tier:hover { transform: translateY(-5px); background: var(--bg-elev-2); box-shadow: 0 26px 64px -22px rgba(138,43,226,.55); }
+.tier:hover { transform: translateY(-5px) scale(1.02); background: rgba(24,24,34,.62); border-color: rgba(138,43,226,.5); box-shadow: 0 26px 64px -22px rgba(138,43,226,.6); }
 /* выделенный тариф (SaaS) */
 .tier.featured {
   border-color: transparent;
@@ -633,14 +706,16 @@ header {
 }
 .case {
   position: relative;
-  background: var(--bg-elev);
+  background: rgba(18,18,26,.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   padding: 32px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: transform .35s var(--ease), background .35s var(--ease);
+  transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
 }
 .case::before {
   content: "";
@@ -656,7 +731,7 @@ header {
   transition: opacity .35s var(--ease);
   pointer-events: none;
 }
-.case:hover { transform: translateY(-5px); background: var(--bg-elev-2); box-shadow: 0 24px 60px -22px rgba(138,43,226,.5); }
+.case:hover { transform: translateY(-5px) scale(1.02); background: rgba(24,24,34,.62); border-color: rgba(138,43,226,.4); box-shadow: 0 24px 60px -22px rgba(138,43,226,.55); }
 .case:hover::before { opacity: .85; }
 
 .case .niche {
@@ -740,8 +815,10 @@ header {
   align-items: center;
   gap: 40px;
   background:
-    linear-gradient(180deg, rgba(var(--brand-rgb),.05), transparent 60%),
-    var(--bg-elev);
+    linear-gradient(180deg, rgba(var(--brand-rgb),.08), transparent 60%),
+    rgba(16,16,24,.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(var(--brand-rgb),.28);
   border-radius: var(--r-lg);
   padding: 42px 44px;
@@ -763,24 +840,27 @@ header {
   transition: opacity .4s var(--ease);
 }
 .banner:hover {
-  transform: translateY(-5px);
-  border-color: rgba(var(--brand-rgb),.55);
-  box-shadow: 0 30px 70px -26px rgba(var(--brand-rgb),.65);
+  transform: translateY(-5px) scale(1.02);
+  border-color: rgba(var(--brand-rgb),.7);
+  box-shadow: 0 30px 70px -26px rgba(var(--brand-rgb),.75);
 }
 .banner:hover::after { opacity: 1; }
 
 .banner .content { position: relative; z-index: 1; max-width: 720px; }
 
-/* мини логотип-иконка проекта (слева сверху) */
+/* мини логотип-иконка проекта (реальный лого с брендовым свечением) */
 .banner .logo-ico {
-  width: 44px; height: 44px;
-  border-radius: 12px;
-  background: linear-gradient(150deg, color-mix(in srgb, var(--brand) 78%, #000), var(--brand));
+  width: 52px; height: 52px;
+  border-radius: 13px;
+  overflow: hidden;
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 18px;
-  box-shadow: 0 8px 24px -6px rgba(var(--brand-rgb),.8), inset 0 1px 0 rgba(255,255,255,.25);
+  box-shadow: 0 8px 30px -4px rgba(var(--brand-rgb),.9), 0 0 0 1px rgba(var(--brand-rgb),.35);
 }
-.banner .logo-ico svg { width: 24px; height: 24px; stroke: #fff; }
+.banner .logo-ico img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* баннер в одну колонку (без правого блока) */
+.banner.solo { grid-template-columns: 1fr; }
 
 /* верхний малый лейбл баннера */
 .banner .label {
@@ -957,11 +1037,18 @@ footer {
   .banner .aside { align-items: flex-start; }
   .banner .aside .btn { width: 100%; }
   .section { padding: 72px 0; }
-  .hero { padding: 84px 0 64px; }
+  .hero { padding: 76px 0 60px; }
+  .hero .hero-grid { grid-template-columns: 1fr; gap: 28px; text-align: center; }
+  .hero .hero-copy { text-align: center; }
+  .hero h1, .hero .sub { margin-left: auto; margin-right: auto; }
+  .hero .cta-row, .hero .trust { justify-content: center; }
+  .hero .sphere-stage { min-height: 280px; order: -1; }
+  .sphere { width: 230px; }
 }
 @media (max-width: 520px) {
   .wrap { padding: 0 18px; }
   .hero .trust { gap: 20px; }
+  .sphere { width: 190px; }
   .card { padding: 26px; }
   .cta-band { padding: 56px 22px; }
   .foot-row { flex-direction: column; text-align: center; }
@@ -1031,17 +1118,24 @@ a:focus-visible {
 <!-- ===================== БЛОК 1 — HERO ===================== -->
 <section class="hero">
   <div class="wrap">
-    <span class="eyebrow"><span class="dot"></span> Маркетплейс ИИ-автоматизаций</span>
-    <h1>Маркетплейс готовых <span class="grad-text">ИИ-сотрудников</span> для вашего бизнеса</h1>
-    <p class="sub">Готовые связки, чат-боты и системы лидгена под ключ. Интеграция с вашей CRM за 48 часов. Снижение расходов на рутину до 70%.</p>
-    <div class="cta-row">
-      <a href="#catalog" class="btn btn-primary">Смотреть каталог решений <span class="arrow">→</span></a>
-      <a href="#how" class="btn btn-ghost">Как это работает</a>
-    </div>
-    <div class="trust">
-      <span><b>48 ч.</b> — срок запуска</span>
-      <span><b>до 70%</b> — экономия на рутине</span>
-      <span><b>24/7</b> — работа без выходных</span>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dot"></span> ИИ-сотрудники под ключ за 48 часов</span>
+        <h1>Запустите <span class="grad-text">ИИ-сотрудника</span> в своём бизнесе</h1>
+        <p class="sub">Расскажите о задаче — подберём готовое решение и адаптируем под вашу нишу за 48 часов.</p>
+        <div class="cta-row">
+          <a href="https://t.me/akumediamgr" target="_blank" rel="noopener" class="btn btn-primary">Подобрать решение за 48 часов <span class="arrow">→</span></a>
+          <a href="#catalog" class="btn btn-ghost">Смотреть каталог</a>
+        </div>
+        <div class="trust">
+          <span><b>48 ч.</b> — срок запуска</span>
+          <span><b>до 70%</b> — экономия на рутине</span>
+          <span><b>24/7</b> — работа без выходных</span>
+        </div>
+      </div>
+      <div class="sphere-stage" aria-hidden="true">
+        <div class="sphere" id="aiSphere"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1313,6 +1407,7 @@ a:focus-visible {
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow"><span class="dot"></span> Экосистема AKU</span>
+      <div class="eco-marker">— Продуктовая экосистема AKU</div>
       <h2>Нужна разработка под ключ или экосистемное решение?</h2>
       <p>Если вашему бизнесу не подходят готовые автоматизации, наши профильные студии упакуют ваш проект с нуля — от контент-стратегии до подбора ИИ-кадров.</p>
     </div>
@@ -1322,10 +1417,7 @@ a:focus-visible {
       <!-- Баннер 1: AKU Automation — КРАСНЫЙ -->
       <article class="banner" style="--brand:#E11D2A; --brand-rgb:225,29,42;">
         <div class="content">
-          <div class="logo-ico" aria-hidden="true">
-            <!-- стилизованный робот -->
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="2.5"/><path d="M12 8V4M12 4h-1.5M12 4h1.5"/><circle cx="9" cy="13" r="1.2"/><circle cx="15" cy="13" r="1.2"/><path d="M9.5 16.5h5"/></svg>
-          </div>
+          <div class="logo-ico" aria-hidden="true"><img src="data:image/png;base64,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" alt="AKU Automation" width="52" height="52"></div>
           <span class="label">Сестринский проект</span>
           <h3>AKU Automation</h3>
           <p class="text">B2B AI-автоматизация нового поколения — кастомные Telegram-боты, интеграция нейросетей в бизнес-процессы, автономные системы лидогенерации и полная инфраструктурная разработка под ключ. Машины, работающие 24/7 без вашего участия.</p>
@@ -1342,12 +1434,9 @@ a:focus-visible {
       </article>
 
       <!-- Баннер 2: AKU Media — СИНИЙ -->
-      <article class="banner" style="--brand:#2563EB; --brand-rgb:37,99,235;">
+      <article class="banner solo" style="--brand:#2563EB; --brand-rgb:37,99,235;">
         <div class="content">
-          <div class="logo-ico" aria-hidden="true">
-            <!-- медиа-значок -->
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m10 9 5 3-5 3V9Z"/></svg>
-          </div>
+          <div class="logo-ico" aria-hidden="true"><img src="data:image/png;base64,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" alt="AKU Media" width="52" height="52"></div>
           <span class="label lines">Медиа-крыло экосистемы</span>
           <h3>Нужен вирусный контент и трафик?</h3>
           <p class="text">Переходите в наше медиа-крыло AKU Media — AI-видео, нейро-аватары и автономные контент-машины, которые генерируют органический трафик и упаковывают смыслы силами передовых нейросетей.</p>
@@ -1361,21 +1450,12 @@ a:focus-visible {
             <a href="https://akumedia.github.io/AKU-Media/" target="_blank" rel="noopener" class="btn btn-brand"><span class="arrow">↗</span> Перейти в AKU Media</a>
           </div>
         </div>
-        <div class="aside">
-          <div class="brand-badge">
-            <div class="glyph">A</div>
-            <div class="cap"><b>AKU Media</b> AI CONTENT STUDIO · 2026</div>
-          </div>
-        </div>
       </article>
 
       <!-- Баннер 3: AKU Jobs Hub — ОРАНЖЕВЫЙ -->
       <article class="banner" style="--brand:#F97316; --brand-rgb:249,115,22;">
         <div class="content">
-          <div class="logo-ico" aria-hidden="true">
-            <!-- портфель + молния -->
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/><path d="m13 11-3 3.2h3.2L10 18"/></svg>
-          </div>
+          <div class="logo-ico" aria-hidden="true"><img src="data:image/png;base64,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" alt="AKU Jobs Hub" width="52" height="52"></div>
           <span class="label">ИИ-кадры и вакансии</span>
           <h3>AKU Jobs Hub</h3>
           <p class="text">Полноценная платформа подбора ИИ-специалистов, разработчиков и digital-кадров для вашего бизнеса. Быстрый автоматизированный скоринг кандидатов и закрытие вакансий в кратчайшие сроки.</p>
@@ -1433,6 +1513,28 @@ a:focus-visible {
       window.scrollTo({ top: y, behavior: 'smooth' });
     });
   });
+
+  // Интерактивная ИИ-сфера: лёгкая реакция на движение мыши
+  (function () {
+    const sphere = document.getElementById('aiSphere');
+    if (!sphere) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const stage = sphere.parentElement;
+    let raf = null;
+    stage.addEventListener('mousemove', e => {
+      const r = stage.getBoundingClientRect();
+      const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+      const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        sphere.style.transform = `translate(${dx * 22}px, ${dy * 22}px) scale(1.04)`;
+      });
+    });
+    stage.addEventListener('mouseleave', () => {
+      if (raf) cancelAnimationFrame(raf);
+      sphere.style.transform = '';
+    });
+  })();
 </script>
 
 </body>
